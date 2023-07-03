@@ -22,18 +22,24 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Properties;
 
 @Slf4j
 public class Main extends Application {
 
-    private static final String FERMYON_APP_URL = "https://wasm-demo-app-zfgjg8mg.fermyon.app";
+    final Properties properties = new Properties();
 
     public static void main(final String... args) {
         launch(args);
     }
 
     @Override
+    @SneakyThrows
     public void start(final Stage window) {
+
+        try (final var stream = Main.class.getClassLoader().getResourceAsStream("config.properties")) {
+            properties.load(stream);
+        }
 
         final TableColumn<Product, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setMaxWidth(200);
@@ -73,7 +79,7 @@ public class Main extends Application {
     @SneakyThrows
     private List<Product> getProductsFromFermyonCloud() {
         final HttpRequest request = HttpRequest.newBuilder() //
-                .uri(new URI(FERMYON_APP_URL)) //
+                .uri(new URI((String) properties.get("fermyon.app.url"))) //
                 .headers("accept", "application/json") //
                 .GET() //
                 .build();
