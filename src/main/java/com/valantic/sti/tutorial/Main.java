@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -35,12 +36,15 @@ public class Main extends Application {
 
     @Override
     @SneakyThrows
-    public void start(final Stage window) {
-
-        try (final var stream = Main.class.getClassLoader().getResourceAsStream("config.properties")) {
+    public void init() {
+        try (final InputStream stream = Main.class.getClassLoader().getResourceAsStream("config.properties")) {
             properties.load(stream);
         }
+    }
 
+    @Override
+
+    public void start(final Stage window) {
         final TableColumn<Product, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setMaxWidth(200);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name")); // has to be a property name
@@ -69,7 +73,7 @@ public class Main extends Application {
         layout.setPadding(new Insets(20, 20, 20, 20));
         layout.getChildren().addAll(table, button);
 
-        final Scene scene = new Scene(layout, 300, 300);
+        final Scene scene = new Scene(layout, 350, 300);
 
         window.setTitle("Valantic WebAssembly Demo");
         window.setScene(scene);
