@@ -43,17 +43,18 @@ public class Main extends Application {
     }
 
     @Override
-
     public void start(final Stage window) {
         final TableColumn<Product, String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setMaxWidth(200);
+        nameColumn.setMinWidth(150);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name")); // has to be a property name
 
         final TableColumn<Product, String> priceColumn = new TableColumn<>("Price");
+        nameColumn.setMinWidth(50);
         priceColumn.setMaxWidth(200);
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         final TableColumn<Product, String> quantityColumn = new TableColumn<>("Quantity");
+        nameColumn.setMinWidth(50);
         quantityColumn.setMaxWidth(200);
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
